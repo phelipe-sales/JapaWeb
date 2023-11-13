@@ -1,0 +1,29 @@
+.header-container {
+    background-color: #565656;
+    height: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: 1fr;
+    justify-items: center;
+    align-items: center;
+}
+
+.menu {
+    grid-row: 1;
+    grid-column: 1;
+    margin-left: 11px;
+    justify-self: start;
+    img {
+        height: 50px;
+        width: 50px;
+    }
+}
+
+.logo {
+    grid-row: 1;
+    grid-column: 2;
+    img {
+        height: 50px;
+        width: 50px;
+    }
+}
