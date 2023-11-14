@@ -1,8 +1,20 @@
 <div class="header-container">
-    <div class="menu">
-        <img src="../../../assets/images/open-menu-icon.svg">
-    </div>
-    <div class="logo">
-        <img src="../../../assets/images/logo.png">
-    </div>
+  <div class="menu" (click)="toggleMenu()">
+    <img src="../../../assets/images/open-menu-icon.svg">
+  </div>
+  <div class="logo">
+    <img src="../../../assets/images/logo.png">
+  </div>
+</div>
+
+<div class="menu-content" [@menuTrigger]="menuOpen ? 'open' : 'closed'">
+  <div class="close-menu" (click)="closeMenu()">
+    <img src="../../../assets/images/close-menu-icon.svg">
+  </div>
+
+  <ul>
+    <li><a href="#">Página Inicial</a></li>
+    <li><a href="#">Sobre</a></li>
+    <li><a href="#">Contato</a></li>
+  </ul>
 </div>
