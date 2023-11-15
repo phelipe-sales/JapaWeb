@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -25,7 +26,16 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     ])
   ],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
+  
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+  }
+
+  goToHome() {
+      this.router.navigate(['']);
+  }
   menuOpen: boolean = false;
 
   toggleMenu() {
