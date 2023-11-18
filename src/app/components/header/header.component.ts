@@ -27,21 +27,22 @@ import { Router } from '@angular/router';
   ],
 })
 export class HeaderComponent implements OnInit {
+  menuOpen: boolean = false;
   
   constructor(private router: Router) {}
-
+  
   ngOnInit() {
   }
-
+  
   goToHome() {
-      this.router.navigate(['']);
+    this.router.navigate(['']);
   }
-  menuOpen: boolean = false;
-
+  
+  
   toggleMenu() {
     this.menuOpen = !this.menuOpen;
   }
-
+  
   closeMenu() {
     this.menuOpen = false;
   }

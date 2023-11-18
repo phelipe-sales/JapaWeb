@@ -33,6 +33,7 @@
 .menu-content {
   height: 100%;
   width: 80%;
+  max-width: 300px;
   position: fixed;
   top: 0;
   left: -80%;
@@ -42,13 +43,19 @@
   flex-direction: column;
   justify-content: flex-start;
 
-  a {
-    margin-left: 10px;
-    text-decoration: none;
-    font-weight: 400;
-    color: #fff;
-    font-size: 32px;
-    margin-bottom: 10px;
+  .links {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    a {
+      margin-left: 10px;
+      text-decoration: none;
+      font-weight: 400;
+      color: #fff;
+      font-size: 32px;
+      margin-bottom: 10px;
+    }
   }
 
   .close-menu {
@@ -60,4 +67,8 @@
       width: 50px;
     }
   }
+}
+
+@media (min-width: 768px) {
+
 }
