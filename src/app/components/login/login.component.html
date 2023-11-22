@@ -1,1 +1,29 @@
-<p>login works!</p>
+<div class="login-container">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="usernamee">
+      <label for="user-name">Usuário</label>
+      <input id="user-name" type="text" formControlName="username" (focus)="clearErrorMessage()">
+      <div class="userName-validation"
+        *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched">
+        UserName é obrigatório.
+      </div>
+    </div>
+  
+    <div class="passwordd">
+      <label for="password">Senha</label>
+      <input id="password" type="password" formControlName="password" (focus)="clearErrorMessage()">
+      <div class="password-validation"
+        *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched">
+        Senha é obrigatória.
+      </div>
+    </div>
+  
+    <div class="loginn">
+      <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+      </div>    
+    
+      <button type="submit" class="primary" [disabled]="loginForm.invalid">Login</button>
+    </div>
+  </form>
+</div>

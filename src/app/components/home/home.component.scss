@@ -75,13 +75,13 @@
 }
 
 .rodizio-btn:hover {
-    background-color: #E10C27;
+    background-color: var(--red-color);
     color: white;
     box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 25%);
 }
 
 .carte-btn:hover {
-    background-color: #E10C27;
+    background-color: var(--red-color);
     color: white;
     box-shadow: 2px 4px 8px 0px rgba(0, 0, 0, 25%);
 }

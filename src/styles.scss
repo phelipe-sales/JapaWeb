@@ -1,3 +1,6 @@
+:root{
+    --red-color: #E10C27;
+}
 * {
     font-family: 'Kulim Park';
     box-sizing: border-box;
@@ -8,7 +11,7 @@
 body{
     height: 100%;
     width: 100%;
-    background-color: #E10C27;
+    background-color: var(--red-color);
 }
 
 @font-face {
