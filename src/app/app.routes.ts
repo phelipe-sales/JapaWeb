@@ -5,6 +5,7 @@ import { LaCarteComponent } from './components/lacarte/lacarte.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { StaffComponent } from './components/staff/staff.component';
+import { MenuItemComponent } from './components/menuitem/menuitem.component';
 
 export const routes: Routes = [
     {path: '', component: HomeComponent},
@@ -12,5 +13,6 @@ export const routes: Routes = [
     {path: 'a-la-carte', component: LaCarteComponent},
     {path: 'staff/login', component: LoginComponent},
     {path: 'staff/register', component: RegisterComponent},
-    {path: 'staff', component: StaffComponent}
+    {path: 'staff', component: StaffComponent},
+    {path: 'staff/menu-item', component: MenuItemComponent}
 ];

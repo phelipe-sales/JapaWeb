@@ -6,5 +6,5 @@ export interface ApiResponse<T> {
 
 export interface ErrorResult {
     statusCode: number,
-    errorMessage: string[]
+    errorMessages: string[]
 }

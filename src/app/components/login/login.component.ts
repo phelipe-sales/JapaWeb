@@ -30,23 +30,14 @@ export class LoginComponent {
       const credentials = this.loginForm.value;
 
       this.authService.login(credentials)
-        .pipe(
-          catchError((error: any) => {
-            const errorMessage = error.error?.errorMessage[0] || 'Erro desconhecido ao fazer login';
-
-            this.errorMessage = errorMessage;
-
-            return of();
-          })
-        )
         .subscribe({
           next: (response) => {
             localStorage.setItem('jwtToken', response.data.jwt)
             console.log('Resposta do login:', response);
             this.router.navigate(['staff']);
           },
-          error: (error: ErrorResult) => {
-            this.errorMessage = error.errorMessage[0];
+          error: (error) => {
+            this.errorMessage = error.error?.errorMessages[0] || 'something went wrong.';
             console.error('Erro no login:', error);
           }
         });
