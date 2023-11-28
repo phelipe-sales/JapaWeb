@@ -4,7 +4,6 @@ import { StaffSidemenuComponent } from '../staff-sidemenu/staff-sidemenu.compone
 import { MenuItem } from '../../types/menu-item.interface';
 import { MenuItemService } from '../../services/menu-item.service';
 import { FormsModule } from '@angular/forms';
-import { createMask } from '@ngneat/input-mask';
 import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { CategoryResult } from '../../types/category.interface';
@@ -28,15 +27,6 @@ export class MenuItemComponent implements OnInit {
   errorMessage: string = '';
   updatedMenuItemMessage: string = '';
   categories: CategoryResult[] = [];
-
-  currencyMask = createMask({
-    alias: 'numeric',
-    groupSeparator: ',',
-    digits: 2,
-    digitsOptional: false,
-    prefix: 'R$ ',
-    placeholder: '0',
-  });
 
   constructor(private menuItemService: MenuItemService, private route: Router, private categoryService: CategoryService) { }
 
