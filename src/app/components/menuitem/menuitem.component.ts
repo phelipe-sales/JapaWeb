@@ -7,11 +7,18 @@ import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { CategoryService } from '../../services/category.service';
 import { CategoryResult } from '../../types/category.interface';
+import { IngredientResult } from '../../types/ingredient.interface';
+import { IngredientService } from '../../services/ingredient.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import { CurrencyMaskModule } from "ng2-currency-mask";
+
 
 @Component({
   selector: 'app-menuitem',
   standalone: true,
-  imports: [CommonModule, StaffSidemenuComponent, FormsModule],
+  imports: [CommonModule, StaffSidemenuComponent, FormsModule, MatFormFieldModule, MatSelectModule, MatInputModule, CurrencyMaskModule],
   templateUrl: './menuitem.component.html',
   styleUrls: ['./menuitem.component.scss']
 })
@@ -27,8 +34,9 @@ export class MenuItemComponent implements OnInit {
   errorMessage: string = '';
   updatedMenuItemMessage: string = '';
   categories: CategoryResult[] = [];
+  ingredients: IngredientResult[] = [];
 
-  constructor(private menuItemService: MenuItemService, private route: Router, private categoryService: CategoryService) { }
+  constructor(private menuItemService: MenuItemService, private route: Router, private categoryService: CategoryService, private ingredientService: IngredientService) { }
 
   ngOnInit() {
     this.loadMenuItems();
@@ -62,9 +70,30 @@ export class MenuItemComponent implements OnInit {
   loadCategories() {
     this.categoryService.getAllCategories(0, 10)
       .subscribe({
-        next:(response) => {
+        next: (response) => {
           console.log(response);
-          this.categories =  response.data.items;
+          this.categories = response.data.items;
+        },
+        error: (error) => {
+          console.error('Erro no componente:', error);
+          if (error.status === 401) {
+            console.log('authentication error => :')
+            this.route.navigate(['unauthorized']);
+
+          } else {
+            console.error('Erro HTTP no componente:', error);
+            this.errorMessage = 'Algo deu errado; por favor, tente novamente mais tarde.';
+          }
+        }
+      });
+  }
+
+  loadIngredients() {
+    this.ingredientService.getAllIngredients(0, 10)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          this.ingredients = response.data.items;
         },
         error: (error) => {
           console.error('Erro no componente:', error);
@@ -94,6 +123,8 @@ export class MenuItemComponent implements OnInit {
   }
 
   editMenuItem(item: MenuItem) {
+    this.clearMessages();
+    this.loadIngredients();
     this.loadCategories();
 
     this.isEditModalOpen = true;

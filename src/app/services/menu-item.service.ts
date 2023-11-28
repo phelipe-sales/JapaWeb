@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { MenuItem } from '../types/menu-item.interface';
 import { ApiResponse, PagingResult } from '../types/apiResponse.interface';
-import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +12,7 @@ export class MenuItemService {
 
   private apiUrl: string = `${environment.apiUrl}MenuItem/v1/`;
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient) { }
 
   getAllMenuItems(pageIndex: number, pageSize: number): Observable<ApiResponse<PagingResult<MenuItem>>> {
     const url = `${this.apiUrl}get-all?PageIndex=${pageIndex}&PageSize=${pageSize}`;

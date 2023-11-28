@@ -44,36 +44,65 @@
                     <img src="../../../assets/images/close-menu-icon.svg">
                 </div>
 
-                <label for="name">Nome:</label>
-                <input *ngIf="selectedMenuItem" id="name" [(ngModel)]="selectedMenuItem.name" (focus)="clearMessages()">
+                <mat-form-field>
+                    <mat-label>Nome:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.name"
+                        (focus)="clearMessages()">
+                </mat-form-field>
 
-                <label for="description">Descrição:</label>
-                <input *ngIf="selectedMenuItem" id="description" [(ngModel)]="selectedMenuItem.description"
-                    (focus)="clearMessages()">
+                <mat-form-field>
+                    <mat-label>Descrição:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.description"
+                        (focus)="clearMessages()" maxlength="500">
+                </mat-form-field>
 
-                <label for="price">Preço:</label>
-                <input *ngIf="selectedMenuItem" id="price" [(ngModel)]="selectedMenuItem.price" type="number"
-                (focus)="clearMessages()">
+                <mat-form-field>
+                    <mat-label>Preço:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.price"
+                        (focus)="clearMessages()" currencyMask
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
+                </mat-form-field>
 
-                <label for="imageUrl">Foto:</label>
-                <input *ngIf="selectedMenuItem" id="imageUrl" [(ngModel)]="selectedMenuItem.imageUrl"
-                    (focus)="clearMessages()">
+                <mat-form-field>
+                    <mat-label for="imageUrl">Foto:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.imageUrl"
+                        (focus)="clearMessages()">
+                </mat-form-field>
 
-                <label for="ingredients">Ingredientes:</label>
-                <input *ngIf="selectedMenuItem" id="ingredients" [(ngModel)]="selectedMenuItem.ingredientsName"
-                    (focus)="clearMessages()">
+                <mat-form-field>
 
-                <label for="category">Categoria:</label>
-                <select *ngIf="selectedMenuItem" id="category" [(ngModel)]="selectedMenuItem.categoryName" (focus)="clearMessages()">
-                    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
-                </select>
-                <label for="availability">Disponível:</label>
-                <input *ngIf="selectedMenuItem" id="availability" [(ngModel)]="selectedMenuItem.isAvailable"
-                    (focus)="clearMessages()">
+                    <mat-label>Ingredientes:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.ingredientsName" multiple (focus)="clearMessages()">
+                        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient.name">
+                            {{ingredient.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
 
-                <label for="rodizio">Rodízio:</label>
-                <input *ngIf="selectedMenuItem" id="rodizio" [(ngModel)]="selectedMenuItem.isRodizioItem"
-                    (focus)="clearMessages()">
+                <mat-form-field class="edit-item-category">
+                    <mat-label>Categoria:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.categoryName" (focus)="clearMessages()">
+                        <mat-option *ngFor="let category of categories" [value]="category.name">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Disponível:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isAvailable" (focus)="clearMessages()">
+                        <mat-option [value]="true">Sim</mat-option>
+                        <mat-option [value]="false">Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Item de Rodízio:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isRodizioItem" (focus)="clearMessages()">
+                        <mat-option [value]="true">Sim</mat-option>
+                        <mat-option [value]="false">Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
 
                 <div *ngIf="errorMessage" class="error-message">
                     {{ errorMessage }}

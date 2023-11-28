@@ -1,10 +1,44 @@
+
+// Custom Theming for Angular Material
+// For more information: https://material.angular.io/guide/theming
+@use '@angular/material' as mat;
+// Plus imports for other components in your app.
+
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat.core();
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$JapaWeb-primary: mat.define-palette(mat.$red-palette);
+$JapaWeb-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+// The warn palette is optional (defaults to red).
+$JapaWeb-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$JapaWeb-theme: mat.define-light-theme((
+  color: (
+    primary: $JapaWeb-primary,
+    accent: $JapaWeb-accent,
+    warn: $JapaWeb-warn,
+  )
+));
+
+// Include theme styles for core and each component used in your app.
+// Alternatively, you can import and @include the theme mixins for each component
+// that you are using.
+@include mat.all-component-themes($JapaWeb-theme);
+
 :root{
     --red-color: #E10C27;
     --grey-color: #3B3B3B;
     --grey-hover-color: #353535;
 }
 * {
-    font-family: 'Kulim Park';
+    font-family: 'Roboto';
     box-sizing: border-box;
     padding: 0;
     margin: 0;
@@ -17,36 +51,43 @@ body{
 }
 
 @font-face {
-    font-family: 'Kulim Park';
-    src: url('./assets/fonts/KulimPark-ExtraLight.ttf') format('truetype');
-    font-weight: 200;
+    font-family: 'Roboto';
+    src: url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+    //font-weight: 200;
     font-style: normal;
 }
 
-@font-face {
-    font-family: 'Kulim Park';
-    src: url('./assets/fonts/KulimPark-Light.ttf') format('truetype');
-    font-weight: 300;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Kulim Park';
+//     src: url('./assets/fonts/KulimPark-ExtraLight.ttf') format('truetype');
+//     font-weight: 200;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'Kulim Park';
-    src: url('./assets/fonts/KulimPark-Regular.ttf') format('truetype');
-    font-weight: 400;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Kulim Park';
+//     src: url('./assets/fonts/KulimPark-Light.ttf') format('truetype');
+//     font-weight: 300;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'Kulim Park';
-    src: url('./assets/fonts/KulimPark-SemiBold.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Kulim Park';
+//     src: url('./assets/fonts/KulimPark-Regular.ttf') format('truetype');
+//     font-weight: 400;
+//     font-style: normal;
+// }
 
-@font-face {
-    font-family: 'Kulim Park';
-    src: url('./assets/fonts/KulimPark-Bold.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-}
+// @font-face {
+//     font-family: 'Kulim Park';
+//     src: url('./assets/fonts/KulimPark-SemiBold.ttf') format('truetype');
+//     font-weight: 600;
+//     font-style: normal;
+// }
+
+// @font-face {
+//     font-family: 'Kulim Park';
+//     src: url('./assets/fonts/KulimPark-Bold.ttf') format('truetype');
+//     font-weight: 700;
+//     font-style: normal;
+// }
