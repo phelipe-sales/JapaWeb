@@ -12,7 +12,7 @@
                     <th>Ingredientes</th>
                     <th>Categoria</th>
                     <th>Disponível</th>
-                    <th>Rodizío</th>
+                    <th>Rodízio</th>
                     <th>Editar</th>
                 </tr>
             </thead>
@@ -70,9 +70,9 @@
                 </mat-form-field>
 
                 <mat-form-field>
-
                     <mat-label>Ingredientes:</mat-label>
-                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.ingredientsName" multiple (focus)="clearMessages()">
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.ingredientsName" multiple
+                        (focus)="clearMessages()">
                         <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient.name">
                             {{ingredient.name}}
                         </mat-option>
@@ -81,7 +81,8 @@
 
                 <mat-form-field class="edit-item-category">
                     <mat-label>Categoria:</mat-label>
-                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.categoryName" (focus)="clearMessages()">
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.categoryName"
+                        (focus)="clearMessages()">
                         <mat-option *ngFor="let category of categories" [value]="category.name">
                             {{category.name}}
                         </mat-option>
@@ -90,7 +91,8 @@
 
                 <mat-form-field>
                     <mat-label>Disponível:</mat-label>
-                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isAvailable" (focus)="clearMessages()">
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isAvailable"
+                        (focus)="clearMessages()">
                         <mat-option [value]="true">Sim</mat-option>
                         <mat-option [value]="false">Não</mat-option>
                     </mat-select>
@@ -98,7 +100,8 @@
 
                 <mat-form-field>
                     <mat-label>Item de Rodízio:</mat-label>
-                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isRodizioItem" (focus)="clearMessages()">
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isRodizioItem"
+                        (focus)="clearMessages()">
                         <mat-option [value]="true">Sim</mat-option>
                         <mat-option [value]="false">Não</mat-option>
                     </mat-select>
