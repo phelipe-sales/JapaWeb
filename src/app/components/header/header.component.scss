@@ -1,5 +1,5 @@
 .header-container {
-  background-color: #565656;
+  background-color: var(--grey-color);
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr;
@@ -37,7 +37,7 @@
   position: fixed;
   top: 0;
   left: -80%;
-  background-color: #333;
+  background-color: var(--grey-color);
   padding: 10px;
   display: flex;
   flex-direction: column;
@@ -56,6 +56,11 @@
       font-size: 32px;
       margin-bottom: 10px;
     }
+  }
+
+  a:hover{
+    background-color: var(--grey-hover-color);
+
   }
 
   .close-menu {

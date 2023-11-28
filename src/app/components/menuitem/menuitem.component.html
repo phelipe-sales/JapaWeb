@@ -1,10 +1,90 @@
 <div class="menuItem-container">
-    <app-staff-sidemenu></app-staff-sidemenu>
+    <app-staff-sidemenu class="sidemenu"></app-staff-sidemenu>
 
-    <div class="listMenuItems">
-        
+    <div class="list-items">
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Ingredientes</th>
+                    <th>Categoria</th>
+                    <th>Disponível</th>
+                    <th>Rodizío</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of menuItems">
+                    <td><img class="item-image" src="{{item.imageUrl}}"></td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price | currency:'BRL':'symbol':'1.2-2' }}</td>
+                    <td>{{ item.ingredientsName.join(', ') }}</td>
+                    <td> {{item.categoryName}}</td>
+                    <td>{{item.isAvailable ? 'Sim' : 'Não'}}</td>
+                    <td>{{item.isRodizioItem ? 'Sim' : 'Não'}}</td>
+                    <td>
+                        <div class="edit-icon" (click)="editMenuItem(item)"><img
+                                src="../../../assets/images/edit-icon.svg"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button (click)="previousPage()" *ngIf="showPreviousButton">Página Anterior</button>
+            <button (click)="nextPage()" *ngIf="showNextButton">Próxima Página</button>
+        </div>
+
+        <div class="modal" *ngIf="isEditModalOpen">
+            <div class="modal-content">
+                <div class="close-edit" (click)="closeEditModal()">
+                    <img src="../../../assets/images/close-menu-icon.svg">
+                </div>
+
+                <label for="name">Nome:</label>
+                <input *ngIf="selectedMenuItem" id="name" [(ngModel)]="selectedMenuItem.name" (focus)="clearMessages()">
+
+                <label for="description">Descrição:</label>
+                <input *ngIf="selectedMenuItem" id="description" [(ngModel)]="selectedMenuItem.description"
+                    (focus)="clearMessages()">
+
+                <label for="price">Preço:</label>
+                <input *ngIf="selectedMenuItem" id="price" [(ngModel)]="selectedMenuItem.price" type="number"
+                (focus)="clearMessages()">
+
+                <label for="imageUrl">Foto:</label>
+                <input *ngIf="selectedMenuItem" id="imageUrl" [(ngModel)]="selectedMenuItem.imageUrl"
+                    (focus)="clearMessages()">
+
+                <label for="ingredients">Ingredientes:</label>
+                <input *ngIf="selectedMenuItem" id="ingredients" [(ngModel)]="selectedMenuItem.ingredientsName"
+                    (focus)="clearMessages()">
+
+                <label for="category">Categoria:</label>
+                <select *ngIf="selectedMenuItem" id="category" [(ngModel)]="selectedMenuItem.categoryName" (focus)="clearMessages()">
+                    <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+                </select>
+                <label for="availability">Disponível:</label>
+                <input *ngIf="selectedMenuItem" id="availability" [(ngModel)]="selectedMenuItem.isAvailable"
+                    (focus)="clearMessages()">
+
+                <label for="rodizio">Rodízio:</label>
+                <input *ngIf="selectedMenuItem" id="rodizio" [(ngModel)]="selectedMenuItem.isRodizioItem"
+                    (focus)="clearMessages()">
+
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+
+                <div *ngIf="updatedMenuItemMessage" class="updated-message">
+                    {{ updatedMenuItemMessage }}
+                </div>
+
+                <button (click)="saveChanges(selectedMenuItem)" *ngIf="selectedMenuItem">Salvar</button>
+            </div>
+        </div>
     </div>
-    
-    <p>menuitem works!</p>
-
 </div>

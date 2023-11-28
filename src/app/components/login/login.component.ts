@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
-import { ErrorResult } from '../../types/apiResponse.interface';
-import { catchError, of } from 'rxjs';
 import { Router } from '@angular/router';
 
 @Component({
@@ -37,7 +35,7 @@ export class LoginComponent {
             this.router.navigate(['staff']);
           },
           error: (error) => {
-            this.errorMessage = error.error?.errorMessages[0] || 'something went wrong.';
+            this.errorMessage = error.error?.errorMessages[0] || 'erro no front';
             console.error('Erro no login:', error);
           }
         });

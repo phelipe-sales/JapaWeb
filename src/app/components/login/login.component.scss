@@ -1,5 +1,5 @@
 .login-container {
-  background-color: #3B3B3B;
+  background-color: var(--grey-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -47,7 +47,8 @@ input {
 button {
   padding: 10px 20px;
   margin-top: 20px;
-  background-color: #3B3B3B;
+  font-size: 20px;
+  background-color: var(--grey-color);
   color: white;
   border: none;
   border-radius: 5px;
@@ -58,5 +59,5 @@ button {
 }
 
 button:hover {
-  background-color: #5B5B5B;
+  background-color: var(--grey-hover-color);
 }
