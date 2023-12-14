@@ -1,0 +1,23 @@
+<div class="header-container">
+    <div class="menu" (click)="toggleMenu()">
+      <img src="../../../assets/images/open-menu-icon.svg">
+    </div>
+    <div class="logo" (click)="goToHome()">
+      <img src="../../../assets/images/logo.png">
+    </div>
+  </div>
+  
+  <div class="menu-content" [@menuTrigger]="menuOpen ? 'open' : 'closed'">
+    <div class="close-menu" (click)="closeMenu()">
+      <img src="../../../assets/images/close-menu-icon.svg">
+    </div>
+  
+    <div class="links">
+      <a href="#">Page X</a>
+      <a href="#">Page X</a>
+      <a href="#">Page X</a>
+      <a href="#">Page X</a>
+      <a href="#">Page X</a>
+      <a href="#">Page X</a>
+    </div>
+  </div>

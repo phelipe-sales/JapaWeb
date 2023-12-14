@@ -1,0 +1,126 @@
+<div class="container">
+    <app-staff-sidemenu class="sidemenu"></app-staff-sidemenu>
+    <div class="list-menuitems">
+        <div class="search-create">
+            <mat-form-field class="search-form-field">
+                <mat-label>Pesquisar:</mat-label>
+                <input matInput type="text" [(ngModel)]="value">
+              </mat-form-field>
+
+              <button [routerLink]="['/staff/create-menuitem']" mat-raised-button color="primary">Criar novo item do menu</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Descrição</th>
+                    <th>Preço</th>
+                    <th>Ingredientes</th>
+                    <th>Categoria</th>
+                    <th>Disponível</th>
+                    <th>Rodízio</th>
+                    <th>Editar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let item of menuItems">
+                    <td><img class="item-image" src="{{item.imageUrl}}"></td>
+                    <td>{{ item.name }}</td>
+                    <td>{{ item.description }}</td>
+                    <td>{{ item.price | currency:'BRL':'symbol':'1.2-2' }}</td>
+                    <td>{{ item.ingredientsName.join(', ') }}</td>
+                    <td> {{item.categoryName}}</td>
+                    <td>{{item.isAvailable ? 'Sim' : 'Não'}}</td>
+                    <td>{{item.isRodizioItem ? 'Sim' : 'Não'}}</td>
+                    <td>
+                        <div class="edit-icon" (click)="editMenuItem(item)"><img
+                                src="../../../assets/images/edit-icon.svg"></div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="pagination">
+            <button (click)="previousPage()" *ngIf="showPreviousButton">Página Anterior</button>
+            <button (click)="nextPage()" *ngIf="showNextButton">Próxima Página</button>
+        </div>
+        <div class="modal" *ngIf="isEditModalOpen">
+            <div class="modal-content">
+                <div class="close-edit" (click)="closeEditModal()">
+                    <img src="../../../assets/images/close-menu-icon.svg">
+                </div>
+    
+                <mat-form-field>
+                    <mat-label>Nome:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.name" (focus)="clearMessages()">
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Descrição:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.description"
+                        (focus)="clearMessages()" maxlength="500">
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Preço:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.price" (focus)="clearMessages()"
+                        currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label for="imageUrl">Foto:</mat-label>
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.imageUrl"
+                        (focus)="clearMessages()">
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Ingredientes:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.ingredientsName" multiple
+                        (focus)="clearMessages()">
+                        <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient.name">
+                            {{ingredient.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field class="edit-item-category">
+                    <mat-label>Categoria:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.categoryName"
+                        (focus)="clearMessages()">
+                        <mat-option *ngFor="let category of categories" [value]="category.name">
+                            {{category.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Disponível:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isAvailable"
+                        (focus)="clearMessages()">
+                        <mat-option [value]="true">Sim</mat-option>
+                        <mat-option [value]="false">Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <mat-form-field>
+                    <mat-label>Item de Rodízio:</mat-label>
+                    <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isRodizioItem"
+                        (focus)="clearMessages()">
+                        <mat-option [value]="true">Sim</mat-option>
+                        <mat-option [value]="false">Não</mat-option>
+                    </mat-select>
+                </mat-form-field>
+    
+                <div *ngIf="errorMessage" class="error-message">
+                    {{ errorMessage }}
+                </div>
+    
+                <div *ngIf="updatedMenuItemMessage" class="updated-message">
+                    {{ updatedMenuItemMessage }}
+                </div>
+    
+                <button (click)="saveChanges(selectedMenuItem)" *ngIf="selectedMenuItem">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>

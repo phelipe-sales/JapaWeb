@@ -1,0 +1,21 @@
+<div class="container">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+        <mat-form-field id="username" >
+            <mat-label>Nome de Usuário</mat-label>
+            <input matInput formControlName="username" (focus)="clearErrorMessage()">
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" (focus)="clearErrorMessage()">
+            <button mat-icon-button matSuffix type="button" (click)="togglePasswordVisibility()">
+                <mat-icon>{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+            </button>
+        </mat-form-field>
+
+        <div *ngIf="errorMessage" class="error-message">
+            {{ errorMessage }}
+          </div>
+        <button mat-raised-button class="login-btn">Login</button>
+    </form>
+</div>

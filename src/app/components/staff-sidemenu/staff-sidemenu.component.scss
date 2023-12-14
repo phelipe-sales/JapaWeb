@@ -1,0 +1,26 @@
+.side-menu {
+    background-color: var(--grey-color);
+    height: 100vh;
+    width: 15vw;
+    padding-top: 100px;
+}
+
+.links{
+    display: flex;
+    flex-direction: column;
+    gap:7px;
+}
+
+a {
+    text-decoration: none;
+    color: white;
+    font-weight: 300;
+    font-size: 28px;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+a:hover {
+    background-color: var(--grey-hover-color);
+    color: white;
+}

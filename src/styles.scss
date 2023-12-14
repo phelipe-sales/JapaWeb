@@ -1,0 +1,35 @@
+@use '@angular/material' as mat;
+@include mat.core();
+$JapaWeb-primary: mat.define-palette(mat.$red-palette);
+$JapaWeb-accent: mat.define-palette(mat.$green-palette, A200, A100, A400);
+$JapaWeb-warn: mat.define-palette(mat.$red-palette);
+$JapaWeb-theme: mat.define-light-theme((color: (primary: $JapaWeb-primary,
+        accent: $JapaWeb-accent,
+        warn: $JapaWeb-warn,
+      )));
+@include mat.all-component-themes($JapaWeb-theme);
+
+:root {
+  --red-color: #E10C27;
+  --grey-color: #3B3B3B;
+  --grey-hover-color: #353535;
+}
+
+* {
+  font-family: 'Roboto';
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  height: 100%;
+  width: 100%;
+  background-color: var(--red-color);
+}
+
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/fonts/Roboto-Regular.ttf') format('truetype');
+  font-style: normal;
+}
