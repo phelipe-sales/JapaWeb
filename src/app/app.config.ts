@@ -8,4 +8,4 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 export const appConfig: ApplicationConfig = {
   providers: [provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(withInterceptors([authenticationInterceptor])), provideAnimations()]};
+    provideHttpClient(withInterceptors([authenticationInterceptor])), provideAnimations(), provideAnimations()]};

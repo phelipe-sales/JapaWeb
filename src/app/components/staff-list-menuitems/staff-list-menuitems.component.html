@@ -2,77 +2,99 @@
     <app-staff-sidemenu class="sidemenu"></app-staff-sidemenu>
     <div class="list-menuitems">
         <div class="search-create">
-            <mat-form-field class="search-form-field">
-                <mat-label>Pesquisar:</mat-label>
-                <input matInput type="text" [(ngModel)]="value">
+            <mat-form-field>
+                <mat-label>Procurar</mat-label>
+                <input  matInput placeholder="Ex. hot roll filadélfia" [(ngModel)]="searchTerm" (input)="ngAfterViewInit()">
               </mat-form-field>
 
-              <button [routerLink]="['/staff/create-menuitem']" mat-raised-button color="primary">Criar novo item do menu</button>
+            <button [routerLink]="['/staff/create-menuitem']" mat-raised-button color="primary">Criar</button>
         </div>
-        <table>
-            <thead>
-                <tr>
-                    <th>Foto</th>
-                    <th>Nome</th>
-                    <th>Descrição</th>
-                    <th>Preço</th>
-                    <th>Ingredientes</th>
-                    <th>Categoria</th>
-                    <th>Disponível</th>
-                    <th>Rodízio</th>
-                    <th>Editar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let item of menuItems">
-                    <td><img class="item-image" src="{{item.imageUrl}}"></td>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.description }}</td>
-                    <td>{{ item.price | currency:'BRL':'symbol':'1.2-2' }}</td>
-                    <td>{{ item.ingredientsName.join(', ') }}</td>
-                    <td> {{item.categoryName}}</td>
-                    <td>{{item.isAvailable ? 'Sim' : 'Não'}}</td>
-                    <td>{{item.isRodizioItem ? 'Sim' : 'Não'}}</td>
-                    <td>
-                        <div class="edit-icon" (click)="editMenuItem(item)"><img
-                                src="../../../assets/images/edit-icon.svg"></div>
-                    </td>
-                </tr>
-            </tbody>
+
+        <table mat-table [dataSource]="menuItems" class="example-table" matSort matSortActive="created" matSortDisableClear
+            matSortDirection="desc">
+
+            <ng-container matColumnDef="imageUrl">
+                <th mat-header-cell *matHeaderCellDef> Image Url </th>
+                <td mat-cell *matCellDef="let row"> <img [src]="row.imageUrl" /> </td>
+            </ng-container>
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+                <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef> Description </th>
+                <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Price </th>
+                <td mat-cell *matCellDef="let row"> {{row.price}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="categoryName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> CategoryName </th>
+                <td mat-cell *matCellDef="let row"> {{row.categoryName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="ingredientsName">
+                <th mat-header-cell *matHeaderCellDef> IngredientsName </th>
+                <td mat-cell *matCellDef="let row"> {{row.ingredientsName}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isRodizioItem">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> IsRodizioItem </th>
+                <td mat-cell *matCellDef="let row"> {{row.isRodizioItem}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="isAvailable">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> IsAvailable </th>
+                <td mat-cell *matCellDef="let row"> {{row.isAvailable}} </td>
+            </ng-container>
+
+            <tr class="mat-row" *matNoDataRow>
+                <td class="mat-cell" colspan="4" style="font-size: 24px; text-align: center; color: white;">
+                    {{errorMessage}}</td>
+            </tr>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
         </table>
-        <div class="pagination">
-            <button (click)="previousPage()" *ngIf="showPreviousButton">Página Anterior</button>
-            <button (click)="nextPage()" *ngIf="showNextButton">Próxima Página</button>
-        </div>
+
+        <mat-paginator [length]="resultsLength" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
+        
         <div class="modal" *ngIf="isEditModalOpen">
             <div class="modal-content">
                 <div class="close-edit" (click)="closeEditModal()">
                     <img src="../../../assets/images/close-menu-icon.svg">
                 </div>
-    
+
                 <mat-form-field>
                     <mat-label>Nome:</mat-label>
-                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.name" (focus)="clearMessages()">
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.name"
+                        (focus)="clearMessages()">
                 </mat-form-field>
-    
+
                 <mat-form-field>
                     <mat-label>Descrição:</mat-label>
                     <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.description"
                         (focus)="clearMessages()" maxlength="500">
                 </mat-form-field>
-    
+
                 <mat-form-field>
                     <mat-label>Preço:</mat-label>
-                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.price" (focus)="clearMessages()"
-                        currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
+                    <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.price"
+                        (focus)="clearMessages()" currencyMask
+                        [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
                 </mat-form-field>
-    
+
                 <mat-form-field>
                     <mat-label for="imageUrl">Foto:</mat-label>
                     <input *ngIf="selectedMenuItem" matInput [(ngModel)]="selectedMenuItem.imageUrl"
                         (focus)="clearMessages()">
                 </mat-form-field>
-    
+
                 <mat-form-field>
                     <mat-label>Ingredientes:</mat-label>
                     <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.ingredientsName" multiple
@@ -82,7 +104,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-    
+
                 <mat-form-field class="edit-item-category">
                     <mat-label>Categoria:</mat-label>
                     <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.categoryName"
@@ -92,7 +114,7 @@
                         </mat-option>
                     </mat-select>
                 </mat-form-field>
-    
+
                 <mat-form-field>
                     <mat-label>Disponível:</mat-label>
                     <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isAvailable"
@@ -101,7 +123,7 @@
                         <mat-option [value]="false">Não</mat-option>
                     </mat-select>
                 </mat-form-field>
-    
+
                 <mat-form-field>
                     <mat-label>Item de Rodízio:</mat-label>
                     <mat-select *ngIf="selectedMenuItem" [(ngModel)]="selectedMenuItem.isRodizioItem"
@@ -110,15 +132,15 @@
                         <mat-option [value]="false">Não</mat-option>
                     </mat-select>
                 </mat-form-field>
-    
+
                 <div *ngIf="errorMessage" class="error-message">
                     {{ errorMessage }}
                 </div>
-    
+
                 <div *ngIf="updatedMenuItemMessage" class="updated-message">
                     {{ updatedMenuItemMessage }}
                 </div>
-    
+
                 <button (click)="saveChanges(selectedMenuItem)" *ngIf="selectedMenuItem">Salvar</button>
             </div>
         </div>
