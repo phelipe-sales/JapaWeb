@@ -2,20 +2,21 @@
     <app-staff-sidemenu class="sidemenu"></app-staff-sidemenu>
     <div class="list-menuitems">
         <div class="search-create">
-            <mat-form-field>
+            <mat-form-field class="search-form">
                 <mat-label>Procurar</mat-label>
-                <input  matInput placeholder="Ex. hot roll filadélfia" [(ngModel)]="searchTerm" (input)="ngAfterViewInit()">
-              </mat-form-field>
+                <input matInput placeholder="Ex. hot roll filadélfia" [(ngModel)]="searchTerm"
+                    (input)="ngAfterViewInit()">
+            </mat-form-field>
 
-            <button [routerLink]="['/staff/create-menuitem']" mat-raised-button color="primary">Criar</button>
+            <button class="create-btn" [routerLink]="['/staff/create-menuitem']" mat-raised-button color="primary">Criar</button>
         </div>
 
-        <table mat-table [dataSource]="menuItems" class="example-table" matSort matSortActive="created" matSortDisableClear
-            matSortDirection="desc">
+        <table mat-table [dataSource]="menuItems" class="example-table" matSort matSortActive="created"
+            matSortDisableClear matSortDirection="desc">
 
             <ng-container matColumnDef="imageUrl">
                 <th mat-header-cell *matHeaderCellDef> Image Url </th>
-                <td mat-cell *matCellDef="let row"> <img [src]="row.imageUrl" /> </td>
+                <td mat-cell *matCellDef="let row"> <img class="table-item-image" [src]="row.imageUrl" /> </td>
             </ng-container>
 
             <ng-container matColumnDef="name">
@@ -53,8 +54,16 @@
                 <td mat-cell *matCellDef="let row"> {{row.isAvailable}} </td>
             </ng-container>
 
+            <ng-container matColumnDef="edit">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Edit </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="edit-icon" (click)="editMenuItem(row)"><img src="../../../assets/images/edit-icon.svg">
+                    </div>
+                </td>
+            </ng-container>
+
             <tr class="mat-row" *matNoDataRow>
-                <td class="mat-cell" colspan="4" style="font-size: 24px; text-align: center; color: white;">
+                <td class="error-Message" colspan="9">
                     {{errorMessage}}</td>
             </tr>
 
@@ -63,7 +72,7 @@
         </table>
 
         <mat-paginator [length]="resultsLength" [pageSizeOptions]="pageSizes" showFirstLastButtons></mat-paginator>
-        
+
         <div class="modal" *ngIf="isEditModalOpen">
             <div class="modal-content">
                 <div class="close-edit" (click)="closeEditModal()">
@@ -141,7 +150,7 @@
                     {{ updatedMenuItemMessage }}
                 </div>
 
-                <button (click)="saveChanges(selectedMenuItem)" *ngIf="selectedMenuItem">Salvar</button>
+                <button class="save-btn" (click)="saveChanges(selectedMenuItem)" *ngIf="selectedMenuItem">Salvar</button>
             </div>
         </div>
     </div>

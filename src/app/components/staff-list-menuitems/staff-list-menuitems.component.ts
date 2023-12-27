@@ -69,9 +69,17 @@ export class StaffListMenuitemsComponent implements OnInit {
           this.resultsLength = response.data.totalItems;
           this.errorMessage = '';
           this.menuItems = response.data.items;
+          
         },
         error: (error) => {
           console.log('--->>> error => ', error);
+          if (error.status === 401) {
+            console.log('authentication error => :')
+            this.route.navigate(['staff/unauthorized']);
+          }
+          if(error.status === 404){
+            this.resultsLength = 0;
+          }
           this.menuItems = [];
           this.errorMessage = error.error.errorMessages[0];
         }
@@ -128,6 +136,7 @@ export class StaffListMenuitemsComponent implements OnInit {
           next: (response) => {
             console.log('searched items', response);
             this.menuItems = response.data.items;
+            this.resultsLength = response.data.totalItems;
           },
           error: (error) => {
             console.error('Erro no componente:', error);
