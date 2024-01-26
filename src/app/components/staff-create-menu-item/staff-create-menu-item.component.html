@@ -1,71 +1,73 @@
-<div class="container">
-    <app-staff-sidemenu class="sidemenu"></app-staff-sidemenu>
+<mat-dialog-content class="container">
+    <form [formGroup]="menuItemForm">
 
-    <div class="create">
-        <form [formGroup]="menuItemForm">
-            
-            <h1>Criar novo item do menu</h1>
+        <h1>Criar novo item do menu</h1>
 
-            <mat-form-field>
-                <mat-label>Nome:</mat-label>
-                <input matInput formControlName="name" required>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Nome:</mat-label>
+            <input matInput formControlName="name" required>
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Descrição:</mat-label>
-                <input matInput formControlName="description" required>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Descrição:</mat-label>
+            <input matInput formControlName="description" required>
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Preço:</mat-label>
-                <input matInput formControlName="price" required currencyMask
-                    [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Preço:</mat-label>
+            <input matInput formControlName="price" required currencyMask
+                [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>URL da Imagem:</mat-label>
-                <input matInput formControlName="imageUrl" required>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>URL da Imagem:</mat-label>
+            <input matInput formControlName="imageUrl" required>
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Categoria:</mat-label>
-                <mat-select formControlName="categoryName">
-                    <mat-option *ngFor="let category of categories" [value]="category.name">
-                        {{category.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Categoria:</mat-label>
+            <mat-select formControlName="categoryName">
+                <mat-option *ngFor="let category of categories" [value]="category.name">
+                    {{category.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Ingredientes:</mat-label>
-                <mat-select formControlName="ingredientsName" multiple>
-                    <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient.name">
-                        {{ingredient.name}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Ingredientes:</mat-label>
+            <mat-select formControlName="ingredientsName" multiple>
+                <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient.name">
+                    {{ingredient.name}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Item do Rodízio:</mat-label>
-                <mat-select formControlName="isRodizioItem">
-                    <mat-option [value]="true">Sim</mat-option>
-                    <mat-option [value]="false">Não</mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Item do Rodízio:</mat-label>
+            <mat-select formControlName="isRodizioItem">
+                <mat-option [value]="true">Sim</mat-option>
+                <mat-option [value]="false">Não</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-            <mat-form-field>
-                <mat-label>Disponível:</mat-label>
-                <mat-select formControlName="isAvailable">
-                    <mat-option [value]="true">Sim</mat-option>
-                    <mat-option [value]="false">Não</mat-option>
-                </mat-select>
-            </mat-form-field>
+        <mat-form-field>
+            <mat-label>Disponível:</mat-label>
+            <mat-select formControlName="isAvailable">
+                <mat-option [value]="true">Sim</mat-option>
+                <mat-option [value]="false">Não</mat-option>
+            </mat-select>
+        </mat-form-field>
 
-            <div *ngIf="errorMessage" class="error-message">
-                {{ errorMessage }}
+        <div *ngIf="errorMessages">
+            <div *ngFor="let message of errorMessages" class="error-message">
+                {{ message }}
             </div>
+        </div>        
+        
+    </form>
+</mat-dialog-content>
 
-            <button mat-raised-button color="primary" (click)="submit()">Salvar</button>
-        </form>
-    </div>
-</div>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button cdkFocusInitial (click)="submit()" [disabled]="!isFormValid()">Criar</button>
+</mat-dialog-actions>

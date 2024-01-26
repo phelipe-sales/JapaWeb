@@ -15,6 +15,5 @@ export const routes: Routes = [
     {path:'staff',component: StaffHomeComponent},
     {path:'staff/list-menuitems', component: StaffListMenuitemsComponent},
     {path:'staff/login', component: StaffLoginComponent},
-    {path: 'staff/unauthorized', component: StaffUnauthorizedComponent},
-    {path: 'staff/create-menuitem', component: StaffCreateMenuItemComponent}
+    {path: 'staff/unauthorized', component: StaffUnauthorizedComponent}
 ];

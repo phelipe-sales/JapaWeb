@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { Router } from '@angular/router';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-customer-header',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './customer-header.component.html',
   styleUrl: './customer-header.component.scss',
   animations: [
@@ -29,15 +29,8 @@ import { Router } from '@angular/router';
 export class CustomerHeaderComponent implements OnInit {
   menuOpen: boolean = false;
   
-  constructor(private router: Router) {}
-  
   ngOnInit() {
   }
-  
-  goToHome() {
-    this.router.navigate(['']);
-  }
-  
   
   toggleMenu() {
     this.menuOpen = !this.menuOpen;

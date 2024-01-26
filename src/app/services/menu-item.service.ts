@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
-import { ApiResponse, PagingResult } from '../models/apiResponse';
+import { ApiResponse } from '../models/apiResponse';
 import { MenuItemResult } from '../models/menuItem';
 import { SortDirection } from '@angular/material/sort';
 
@@ -11,7 +11,7 @@ import { SortDirection } from '@angular/material/sort';
 })
 export class MenuItemService {
 
-  private apiUrl: string = `${environment.apiUrl}menuItem/v1/`;
+  private apiUrl: string = `${environment.apiUrl}MenuItem/v1/`;
 
   constructor(private http: HttpClient) { }
 
@@ -36,7 +36,7 @@ export class MenuItemService {
     page: number,
     perpage: number
   ): Observable<any> {
-    const apiUrl = 'https://localhost:7007/api/MenuItem/v1/get-all';
+    const apiUrl = `${this.apiUrl}get-all`;
     const params = new HttpParams()
       .set('SearchTerm', searchTerm)
       .set('PageIndex', page)
@@ -50,10 +50,5 @@ export class MenuItemService {
   updateMenuItem(menuItem: MenuItemResult): Observable<ApiResponse<MenuItemResult>> {
     const url = `${this.apiUrl}update`;
     return this.http.put<ApiResponse<MenuItemResult>>(url, menuItem);
-  }
-
-  searchMenuItem(searchTerm: string): Observable<ApiResponse<PagingResult<MenuItemResult>>> {
-    const url = `${this.apiUrl}search?SearchTerm=${searchTerm}`;
-    return this.http.get<ApiResponse<PagingResult<MenuItemResult>>>(url);
   }
 }

@@ -16,11 +16,12 @@ a {
     color: white;
     font-weight: 300;
     font-size: 28px;
-    padding-left: 20px;
+    padding: 7px 0px 7px 20px;
     cursor: pointer;
 }
 
 a:hover {
     background-color: var(--grey-hover-color);
     color: white;
+    
 }

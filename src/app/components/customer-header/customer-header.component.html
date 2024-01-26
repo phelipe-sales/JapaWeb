@@ -2,7 +2,7 @@
     <div class="menu" (click)="toggleMenu()">
       <img src="../../../assets/images/open-menu-icon.svg">
     </div>
-    <div class="logo" (click)="goToHome()">
+    <div class="logo" [routerLink]="['']">
       <img src="../../../assets/images/logo.png">
     </div>
   </div>
@@ -13,7 +13,7 @@
     </div>
   
     <div class="links">
-      <a href="#">Page X</a>
+      <a (click)="closeMenu()" [routerLink]="['']">Página Inicial</a>
       <a href="#">Page X</a>
       <a href="#">Page X</a>
       <a href="#">Page X</a>

@@ -18,23 +18,26 @@ import { CurrencyMaskModule } from "ng2-currency-mask";
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { merge, startWith, switchMap } from 'rxjs';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { StaffEditMenuItemComponent } from '../staff-edit-menu-item/staff-edit-menu-item.component';
+import { StaffCreateMenuItemComponent } from '../staff-create-menu-item/staff-create-menu-item.component';
 
 @Component({
   selector: 'app-staff-list-menuitems',
   standalone: true,
-  imports: [CommonModule, StaffSidemenuComponent, FormsModule,MatSortModule, MatTableModule, MatFormFieldModule, MatSelectModule, MatInputModule, CurrencyMaskModule, MatIconModule, RouterModule, MatPaginatorModule],
+  imports: [MatDialogModule, CommonModule, StaffSidemenuComponent, FormsModule, MatSortModule, MatTableModule, MatFormFieldModule, MatSelectModule, MatInputModule, CurrencyMaskModule, MatIconModule, RouterModule, MatPaginatorModule],
   templateUrl: './staff-list-menuitems.component.html',
   styleUrl: './staff-list-menuitems.component.scss'
 })
 export class StaffListMenuitemsComponent implements OnInit {
+  
   displayedColumns: string[] = ['imageUrl', 'name', 'description', 'price', 'categoryName', 'ingredientsName', 'isRodizioItem', 'isAvailable', 'edit'];
-
   menuItems: MenuItemResult[] = [];
   pageSizes = [5, 10, 20];
   resultsLength = 0;
   searchTerm: string = '';
   errorMessage: string = '';
-
+  searchTerm2: string = '';
   isEditModalOpen = false;
   selectedMenuItem: MenuItemResult | undefined;
   updatedMenuItemMessage: string = '';
@@ -46,11 +49,15 @@ export class StaffListMenuitemsComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private menuItemService: MenuItemService, private categoryService: CategoryService, private ingredientService: IngredientService, private route: Router) { }
+  constructor(private menuItemService: MenuItemService,
+    private categoryService: CategoryService,
+    private ingredientService: IngredientService,
+    private route: Router,
+    private dialog: MatDialog) { }
 
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-  
+
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(
         startWith({}),
@@ -69,7 +76,6 @@ export class StaffListMenuitemsComponent implements OnInit {
           this.resultsLength = response.data.totalItems;
           this.errorMessage = '';
           this.menuItems = response.data.items;
-          
         },
         error: (error) => {
           console.log('--->>> error => ', error);
@@ -77,7 +83,7 @@ export class StaffListMenuitemsComponent implements OnInit {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
           }
-          if(error.status === 404){
+          if (error.status === 404) {
             this.resultsLength = 0;
           }
           this.menuItems = [];
@@ -85,8 +91,6 @@ export class StaffListMenuitemsComponent implements OnInit {
         }
       });
   }
-
-
 
   loadCategories() {
     this.categoryService.getAllCategories(0, 100)
@@ -129,72 +133,39 @@ export class StaffListMenuitemsComponent implements OnInit {
       });
   }
 
-  searchByTerm() {
-    if (this.searchTerm.trim() !== '') {
-      this.menuItemService.searchMenuItem(this.searchTerm)
-        .subscribe({
-          next: (response) => {
-            console.log('searched items', response);
-            this.menuItems = response.data.items;
-            this.resultsLength = response.data.totalItems;
-          },
-          error: (error) => {
-            console.error('Erro no componente:', error);
-            if (error.status === 401) {
-              console.log('authentication error => :')
-              this.route.navigate(['staff/unauthorized']);
-            } else {
-              console.error('Erro HTTP no componente:', error);
-              this.errorMessage = error.error.errorMessages[0];
-            }
-          }
-        });
-    } else {
-      this.ngAfterViewInit();
-    }
+  createMenuItem(){
+    const dialogRef = this.dialog.open(StaffCreateMenuItemComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.ngAfterViewInit();
+      }
+    });
   }
 
   editMenuItem(item: MenuItemResult) {
-    this.clearMessages();
-    this.loadIngredients();
-    this.loadCategories();
-
-    this.isEditModalOpen = true;
-    this.selectedMenuItem = { ...item };
-  }
-
-  closeEditModal() {
-    this.isEditModalOpen = false;
-    this.selectedMenuItem = undefined;
-    this.ngAfterViewInit();
-  }
-
-  saveChanges(selectedMenuItem: MenuItemResult) {
-
-    this.menuItemService.updateMenuItem(selectedMenuItem)
-      .subscribe({
-        next: (response) => {
-          this.updatedMenuItemMessage = 'Item do menu atualizado com sucesso.';
-          console.log(response);
-        },
-        error: (error) => {
-          console.error('Erro no componente:', error);
-          if (error.status === 401) {
-            console.log('authentication error => :')
-            this.route.navigate(['staff/unauthorized']);
-
-          } else {
-            console.error('Erro HTTP no componente:', error);
-            this.errorMessage = error.error.errorMessages[0];
-          }
-        }
-      });
-
-    console.log('Salvando alterações...', selectedMenuItem);
+    const dialogRef = this.dialog.open(StaffEditMenuItemComponent, {
+      data: { ...item }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.ngAfterViewInit();
+      }
+    });
   }
 
   clearMessages() {
     this.errorMessage = '';
     this.updatedMenuItemMessage = '';
+  }
+
+  search() {
+    if (this.searchTerm2.length >= 3) {
+      this.searchTerm = this.searchTerm2;
+    } else if (this.searchTerm2.length === 0) {
+      this.searchTerm = '';
+    }
+
+    this.ngAfterViewInit();
   }
 }

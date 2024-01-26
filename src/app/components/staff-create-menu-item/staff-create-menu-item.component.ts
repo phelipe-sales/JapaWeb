@@ -13,23 +13,29 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { CurrencyMaskModule } from "ng2-currency-mask";
+import { MatDialogModule, MatDialogTitle, MatDialogContent, MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-staff-create-menu-item',
   standalone: true,
-  imports: [CommonModule, StaffSidemenuComponent, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatSelectModule, MatButtonModule, CurrencyMaskModule],
+  imports: [MatDialogModule, MatDialogTitle, MatDialogContent, CommonModule, StaffSidemenuComponent, MatFormFieldModule, MatInputModule, FormsModule, ReactiveFormsModule, MatSelectModule, MatButtonModule, CurrencyMaskModule],
   templateUrl: './staff-create-menu-item.component.html',
-  styleUrl: './staff-create-menu-item.component.scss'
+  styleUrls: ['./staff-create-menu-item.component.scss']
 })
 export class StaffCreateMenuItemComponent {
 
-  errorMessage: string = '';
+  errorMessages: string[] =[];
   categories: CategoryResult[] = [];
   ingredients: IngredientResult[] = [];
-
   menuItemForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private route: Router, private menuItemService: MenuItemService, private categoryService: CategoryService, private ingredientService: IngredientService) {
+  constructor(private fb: FormBuilder, 
+    private route: Router, 
+    private menuItemService: MenuItemService, 
+    private categoryService: CategoryService, 
+    private ingredientService: IngredientService,
+    private dialogRef: MatDialogRef<StaffCreateMenuItemComponent>) {
+
     this.loadCategories();
     this.loadIngredients();
     this.menuItemForm = this.fb.group({
@@ -46,31 +52,31 @@ export class StaffCreateMenuItemComponent {
 
   submit() {
     console.log("--->>>", this.menuItemForm.value);
+
     this.menuItemService.createMenuItem(this.menuItemForm.value)
       .subscribe({
         next: (response) => {
           console.log(response);
-          this.route.navigate(['staff/list-menuitems']);
+          this.dialogRef.close(true);
         },
         error: (error) => {
-          console.error('Erro no componente:', error);
-          if (error.status === 401) {
+          if (error.statusCode === 401) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
-
-          } else {
-            console.error('Erro HTTP no componente:', error);
-            this.errorMessage = error.error.errorMessages[0];
           }
+          console.error('Erro:', error);
+          this.errorMessages = error.error.errorMessages;
+          console.log('asds a a', this.errorMessages);
         }
       });
   }
+  
 
   loadCategories() {
     this.categoryService.getAllCategories(0, 100)
       .subscribe({
         next: (response) => {
-          console.log('--->>> categories:',response);
+          console.log('--->>> categories:', response);
           this.categories = response.data.items;
         },
         error: (error) => {
@@ -78,10 +84,9 @@ export class StaffCreateMenuItemComponent {
           if (error.status === 401) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
-
           } else {
             console.error('Erro HTTP no componente:', error);
-            this.errorMessage = error.error.errorMessages[0];
+            this.errorMessages = error.error.errorMessages;
           }
         }
       });
@@ -91,7 +96,7 @@ export class StaffCreateMenuItemComponent {
     this.ingredientService.getAllIngredients(0, 100)
       .subscribe({
         next: (response) => {
-          console.log('--->>> ingredients:',response);
+          console.log('--->>> ingredients:', response);
           this.ingredients = response.data.items;
         },
         error: (error) => {
@@ -101,9 +106,13 @@ export class StaffCreateMenuItemComponent {
             this.route.navigate(['staff/unauthorized']);
           } else {
             console.error('Erro HTTP no componente:', error);
-            this.errorMessage = error.error.errorMessages[0];
+            this.errorMessages = error.error.errorMessages;
           }
         }
       });
+  }
+
+  isFormValid(): boolean {
+    return this.menuItemForm.valid;
   }
 }

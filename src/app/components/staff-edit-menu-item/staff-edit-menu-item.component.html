@@ -1,0 +1,79 @@
+<mat-dialog-content class="container">
+    <h1>Editar item do cardápio</h1>
+    
+    <mat-form-field>
+        <mat-label>Nome:</mat-label>
+        <input matInput [(ngModel)]="selectedMenuItem.name"
+            (focus)="clearMessages()">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Descrição:</mat-label>
+        <input matInput [(ngModel)]="selectedMenuItem.description"
+            (focus)="clearMessages()" maxlength="500">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Preço:</mat-label>
+        <input matInput [(ngModel)]="selectedMenuItem.price"
+            (focus)="clearMessages()" currencyMask
+            [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',', align: 'left'}">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label for="imageUrl">Foto:</mat-label>
+        <input matInput [(ngModel)]="selectedMenuItem.imageUrl"
+            (focus)="clearMessages()">
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Ingredientes:</mat-label>
+        <mat-select [(ngModel)]="selectedMenuItem.ingredientsName" multiple
+            (focus)="clearMessages()">
+            <mat-option *ngFor="let ingredient of ingredients" [value]="ingredient.name">
+                {{ingredient.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field class="edit-item-category">
+        <mat-label>Categoria:</mat-label>
+        <mat-select [(ngModel)]="selectedMenuItem.categoryName"
+            (focus)="clearMessages()">
+            <mat-option *ngFor="let category of categories" [value]="category.name">
+                {{category.name}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Disponível:</mat-label>
+        <mat-select [(ngModel)]="selectedMenuItem.isAvailable"
+            (focus)="clearMessages()">
+            <mat-option [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+        <mat-label>Item de Rodízio:</mat-label>
+        <mat-select [(ngModel)]="selectedMenuItem.isRodizioItem"
+            (focus)="clearMessages()">
+            <mat-option [value]="true">Sim</mat-option>
+            <mat-option [value]="false">Não</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    <div *ngIf="errorMessage" class="error-message">
+        {{ errorMessage }}
+    </div>
+
+    <div *ngIf="updatedMenuItemMessage" class="updated-message">
+        {{ updatedMenuItemMessage }}
+    </div>
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancelar</button>
+    <button mat-button cdkFocusInitial (click)="saveChanges(selectedMenuItem)">Salvar</button>
+</mat-dialog-actions>
