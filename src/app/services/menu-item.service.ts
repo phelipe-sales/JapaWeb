@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 import { ApiResponse } from '../models/apiResponse';
 import { MenuItemResult } from '../models/menuItem';
 import { SortDirection } from '@angular/material/sort';
@@ -36,7 +36,7 @@ export class MenuItemService {
     page: number,
     perpage: number
   ): Observable<any> {
-    const apiUrl = `${this.apiUrl}get-all`;
+    const url = `${this.apiUrl}get-all`;
     const params = new HttpParams()
       .set('SearchTerm', searchTerm)
       .set('PageIndex', page)
@@ -44,7 +44,7 @@ export class MenuItemService {
       .set('SortColumn', sort)
       .set('SortOrder', order);
 
-    return this.http.get<any>(apiUrl, { params });
+    return this.http.get<any>(url, { params });
   }
 
   updateMenuItem(menuItem: MenuItemResult): Observable<ApiResponse<MenuItemResult>> {

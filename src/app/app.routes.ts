@@ -6,7 +6,8 @@ import { StaffHomeComponent } from './components/staff-home/staff-home.component
 import { StaffListMenuitemsComponent } from './components/staff-list-menuitems/staff-list-menuitems.component';
 import { StaffLoginComponent } from './components/staff-login/staff-login.component';
 import { StaffUnauthorizedComponent } from './components/staff-unauthorized/staff-unauthorized.component';
-import { StaffCreateMenuItemComponent } from './components/staff-create-menu-item/staff-create-menu-item.component';
+import { CustomerLogoutComponent } from './components/customer-logout/customer-logout.component';
+import { CustomerLoginComponent } from './components/customer-login/customer-login.component';
 
 export const routes: Routes = [
     {path:'',component: HomeComponent},
@@ -15,5 +16,7 @@ export const routes: Routes = [
     {path:'staff',component: StaffHomeComponent},
     {path:'staff/list-menuitems', component: StaffListMenuitemsComponent},
     {path:'staff/login', component: StaffLoginComponent},
-    {path: 'staff/unauthorized', component: StaffUnauthorizedComponent}
+    {path: 'staff/unauthorized', component: StaffUnauthorizedComponent},
+    {path: 'logout', component: CustomerLogoutComponent}
+    //{path: 'login', component: CustomerLoginComponent}
 ];

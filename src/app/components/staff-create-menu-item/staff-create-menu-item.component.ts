@@ -60,7 +60,7 @@ export class StaffCreateMenuItemComponent {
           this.dialogRef.close(true);
         },
         error: (error) => {
-          if (error.statusCode === 401) {
+          if (error.statusCode === 401 || error.statusCode === 403) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
           }
@@ -81,7 +81,7 @@ export class StaffCreateMenuItemComponent {
         },
         error: (error) => {
           console.error('Erro no componente:', error);
-          if (error.status === 401) {
+          if (error.status === 401 || error.status === 403) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
           } else {
@@ -101,7 +101,7 @@ export class StaffCreateMenuItemComponent {
         },
         error: (error) => {
           console.error('Erro no componente:', error);
-          if (error.status === 401) {
+          if (error.status === 401 || error.status === 403) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
           } else {

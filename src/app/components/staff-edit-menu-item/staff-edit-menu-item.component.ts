@@ -60,7 +60,7 @@ export class StaffEditMenuItemComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro no componente:', error);
-          if (error.status === 401) {
+          if (error.status === 401 || error.status === 403) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
           }
@@ -81,7 +81,7 @@ export class StaffEditMenuItemComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro no componente:', error);
-          if (error.status === 401) {
+          if (error.status === 401 || error.status === 403) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
 
@@ -102,7 +102,7 @@ export class StaffEditMenuItemComponent implements OnInit {
         },
         error: (error) => {
           console.error('Erro no componente:', error);
-          if (error.status === 401) {
+          if (error.status === 401 || error.status === 403) {
             console.log('authentication error => :')
             this.route.navigate(['staff/unauthorized']);
           } else {
