@@ -4,7 +4,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { Router } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-customer-login',
@@ -26,7 +26,7 @@ export class CustomerLoginComponent implements OnInit {
     window.onGoogleLibraryLoad = () =>{
       //@ts-ignore
       google.accounts.id.initialize({
-        client_id: environment.google_id,
+        client_id: '116632478825-hdno7o6bt86a87il6jhs1qemsbedh52j.apps.googleusercontent.com',
         callback: this.handleCredentialResponse.bind(this),
         auto_select: false,
         cancel_on_tap_outside: true
@@ -48,7 +48,8 @@ export class CustomerLoginComponent implements OnInit {
       next: (response) => {
         localStorage.setItem('jwtToken',response.data.jwt);
         console.log('Login response: ', response);
-        this.router.navigate(['/']);
+        window.location.reload();
+
       },
       error: (error) => {
         console.log('Error response: ', error);

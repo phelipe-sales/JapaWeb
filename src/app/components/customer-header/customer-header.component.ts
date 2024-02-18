@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { RouterModule } from '@angular/router';
@@ -28,8 +28,13 @@ import { RouterModule } from '@angular/router';
 })
 export class CustomerHeaderComponent implements OnInit {
   menuOpen: boolean = false;
-  
+  showLogout: boolean = true;
+
+
   ngOnInit() {
+    if(localStorage.getItem('jwtToken') === null){
+      this.showLogout = false;
+    }
   }
   
   toggleMenu() {
@@ -38,5 +43,10 @@ export class CustomerHeaderComponent implements OnInit {
   
   closeMenu() {
     this.menuOpen = false;
+  }
+
+  logout(){
+    localStorage.removeItem('jwtToken');
+    window.location.reload();
   }
 }

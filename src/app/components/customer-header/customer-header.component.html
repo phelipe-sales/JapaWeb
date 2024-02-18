@@ -5,6 +5,9 @@
     <div class="logo" [routerLink]="['']">
       <img src="../../../assets/images/logo.png">
     </div>
+    <div class="logout" (click)="logout()">
+      <img src="../../../assets/images/logout-icon.svg" *ngIf="showLogout">
+    </div>
   </div>
   
   <div class="menu-content" [@menuTrigger]="menuOpen ? 'open' : 'closed'">

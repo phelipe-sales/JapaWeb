@@ -18,7 +18,9 @@ export class HomeComponent implements OnInit {
 
   }
   ngOnInit() {
-    this.dialog.open(CustomerLoginComponent);
+    if(localStorage.getItem('jwtToken') === null){
+      this.dialog.open(CustomerLoginComponent);
+    }
   }
 
 }

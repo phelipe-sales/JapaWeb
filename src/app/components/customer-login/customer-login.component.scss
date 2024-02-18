@@ -1,22 +1,17 @@
-.base{
-    background-color: #F53300;
-    color: white;
-    height: 250px;
-    width: 325px;
+.container{
+    background-color: #f53300;
+    height: 170px;
+    width: 250px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: space-around;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+h2{
+    color: white;
+    font-size: 28px;
+    font-weight: 600;
     text-align: center;
-    box-shadow: 0px 4px 5px 1px rgba(0, 0, 0, 25%);
-
-    h1{
-        font-size: 32px;
-        font-weight: 600;
-    }
-
-    h2{
-        font-size: 24px;
-        font-weight: 400;
-    }
 }
