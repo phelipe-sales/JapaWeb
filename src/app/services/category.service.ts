@@ -17,4 +17,9 @@ export class CategoryService {
     const url = `${this.apiUrl}get-all?PageIndex=${pageIndex}&PageSize=${pageSize}`;
     return this.http.get<ApiResponse<PagingResult<CategoryResult>>>(url);
   }
+
+  getCategoriesName(): Observable<ApiResponse<string[]>>{
+    const url = `${this.apiUrl}get-names`;
+    return this.http.get<ApiResponse<string[]>>(url);
+  }
 }
