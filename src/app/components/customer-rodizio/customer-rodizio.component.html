@@ -1,3 +1,18 @@
 <app-customer-header></app-customer-header>
 
-<p>customer-rodizio works!</p>
+<div class="carousel-container">
+  <div *ngFor="let category of categoriesName" class="carousel-item">
+    <p id="category-{{ category }}">{{ category }}</p>
+  </div>
+</div>
+
+<div class="list-menuItems">
+  <mat-list>
+    <mat-list-item *ngFor="let menuItem of menuItems; trackBy: trackMenuItem">
+      <div matListItemTitle>{{ menuItem.name }}</div>
+      <div matListItemLine>{{ menuItem.description }}</div>
+      <div matListItemLine>{{ menuItem.price }}</div>
+      <div matListItemLine>{{ menuItem.categoryName }}</div>
+    </mat-list-item>
+  </mat-list>
+</div>

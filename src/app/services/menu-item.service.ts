@@ -51,4 +51,11 @@ export class MenuItemService {
     const url = `${this.apiUrl}update`;
     return this.http.put<ApiResponse<MenuItemResult>>(url, menuItem);
   }
+
+  getByCategory(categoryName:string) : Observable<ApiResponse<MenuItemResult[]>>{
+    const url = `${this.apiUrl}get-by-category`;
+    const params = new HttpParams()
+      .set('CategoryName', categoryName);
+    return this.http.get<ApiResponse<MenuItemResult[]>>(url, { params });
+  }
 }

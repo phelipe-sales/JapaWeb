@@ -1,0 +1,53 @@
+.carousel-container {
+  display: flex;
+  height: 50px;
+  overflow-x: auto;
+  white-space: nowrap;
+  -webkit-overflow-scrolling: touch;
+  padding: 10px;
+  background-color: #696969;
+  margin-bottom: 10px;
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.carousel-item {
+  flex: 0 0 auto;
+  margin: 5px 10px 0px 10px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+// .categories-carousel {
+  
+//   // display: flex;
+//   // overflow-x: auto;
+//   // white-space: nowrap;
+//   // padding: 10px;
+//   // color: var(--red-color);
+//   // font-weight: 600;
+//   // scrollbar-width: thin;
+//   // scrollbar-color: transparent transparent;
+//   // align-self: flex-end;
+
+//   &::-webkit-scrollbar {
+//     width: 12px;
+//   }
+
+//   &::-webkit-scrollbar-thumb {
+//     background-color: transparent;
+//   }
+// }
+
+// .category-list {
+//   display: flex;
+//   flex-direction: row;
+//   font-size: 16px;
+// }
+
+// @media only screen and (max-width: 767px) {
+//   .carrossel-horizontal::-webkit-scrollbar {
+//     width: 0;
+//   }
+// }
