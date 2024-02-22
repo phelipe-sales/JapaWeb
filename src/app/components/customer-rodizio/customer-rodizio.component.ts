@@ -11,35 +11,37 @@ import { MatListModule } from '@angular/material/list';
   standalone: true,
   imports: [CommonModule, CustomerHeaderComponent, MatListModule],
   templateUrl: './customer-rodizio.component.html',
-  styleUrl: './customer-rodizio.component.scss'
+  styleUrls: ['./customer-rodizio.component.scss']
 })
 export class CustomerRodizioComponent implements OnInit {
-
   categoriesName: string[] = [];
-menuItems: MenuItemWithCategory[] = [];
-  currentlyCategory: string = '';
-
-  constructor(private categoryService: CategoryService, private menuItemService: MenuItemService) {
-  }
+  menuItems: MenuItemWithCategory[] = [];
+  
+  constructor(private categoryService: CategoryService, private menuItemService: MenuItemService) { }
 
   ngOnInit(): void {
-    this.categoryService.getCategoriesName()
-      .subscribe({
-        next: (response) => {
-          this.categoriesName = response.data;
-        },
-        error: (error) => {
-          console.log(error);
-        }
-      });
+    this.categoryService.getCategoriesName().subscribe({
+      next: (response) => {
+        this.categoriesName = response.data;
+      },
+      error: (error) => {
+        console.log(error);
+      }
+    });
 
-      this.menuItemService.getByCategory()
-      .subscribe({
-        next: (response) => {
-          this.menuItems = response.data;
-          
-        }
-      });
+    this.menuItemService.getByCategory().subscribe({
+      next: (response) => {
+        this.menuItems = response.data;
+      }
+    });
   }
 
+  scrollToCategory(category: string): void {
+    const categoryId = `#${category}`;
+    console.log(categoryId);
+
+    setTimeout(() => {
+      document.querySelector(categoryId)?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
 }

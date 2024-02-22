@@ -1,21 +1,22 @@
 <div class="container">
   <app-customer-header class="header-container"></app-customer-header>
 
-<div class="carousel-container">
-  <div *ngFor="let category of categoriesName" class="carousel-item">
-    <p id="category-{{ category }}">{{ category }}</p>
+  <div class="carousel-container">
+    <div *ngFor="let category of categoriesName" class="carousel-item" (click)="scrollToCategory(category)">
+      <p>{{ category }}</p>
+    </div>
   </div>
-</div>
 
-<div class="list-menuItems">
-  <mat-list *ngFor="let categoryItems of menuItems">
-    <div mat-subheader>{{ categoryItems.categoryName }}</div>
-    <mat-list-item *ngFor="let menuItem of categoryItems.menuItems">
-      <div matListItemTitle>{{ menuItem.name }}</div>
-      <div matListItemLine>{{ menuItem.description }}</div>
-      <div matListItemLine>{{ menuItem.price }}</div>
-      <div matListItemLine>{{ menuItem.categoryName }}</div>
-    </mat-list-item>
-  </mat-list>
-</div>
+  <div class="list-menuItems">
+    <mat-list *ngFor="let categoryItems of menuItems">
+      <div mat-subheader id="{{ categoryItems.categoryName }}">{{ categoryItems.categoryName }}</div>
+      <mat-list-item *ngFor="let menuItem of categoryItems.menuItems">
+        <div matListItemTitle>{{ menuItem.name }}</div>
+        <div matListItemLine>{{ menuItem.description }}</div>
+        <div matListItemLine>{{ menuItem.price }}</div>
+        <div matListItemLine>{{ menuItem.categoryName }}</div>
+      </mat-list-item>
+    </mat-list>
+  </div>
+  
 </div>
