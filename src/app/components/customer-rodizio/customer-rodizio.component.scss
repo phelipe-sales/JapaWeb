@@ -19,7 +19,7 @@
   white-space: nowrap;
   -webkit-overflow-scrolling: touch;
   padding: 10px;
-  background-color: #696969;
+  background-color: #ffffff;
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
@@ -29,5 +29,19 @@
   margin: 5px 10px 0px 10px;
   font-size: 18px;
   font-weight: 500;
-  color: #ffffff;
+  color: #464646;
+
+  &.selected {
+    color: #ff0000;
+    font-weight: 600;
+  }
+
+  .category-marker {
+    height: 5px;
+    background-color: #ff0000;
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    border-radius: 15px;
+  } 
 }

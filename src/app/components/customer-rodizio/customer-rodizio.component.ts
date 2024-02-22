@@ -11,12 +11,13 @@ import { MatListModule } from '@angular/material/list';
   standalone: true,
   imports: [CommonModule, CustomerHeaderComponent, MatListModule],
   templateUrl: './customer-rodizio.component.html',
-  styleUrls: ['./customer-rodizio.component.scss']
+  styleUrl: './customer-rodizio.component.scss'
 })
 export class CustomerRodizioComponent implements OnInit {
   categoriesName: string[] = [];
   menuItems: MenuItemWithCategory[] = [];
-  
+  selectedCategory: string | null = null;
+
   constructor(private categoryService: CategoryService, private menuItemService: MenuItemService) { }
 
   ngOnInit(): void {
@@ -39,9 +40,16 @@ export class CustomerRodizioComponent implements OnInit {
   scrollToCategory(category: string): void {
     const categoryId = `#${category}`;
     console.log(categoryId);
-
+  
     setTimeout(() => {
-      document.querySelector(categoryId)?.scrollIntoView({ behavior: 'smooth' });
+      const element = document.querySelector(categoryId);
+      if (element) {
+        const offset = 130;
+        const topPos = element.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top: topPos, behavior: 'smooth' });
+      }
     }, 100);
+  
+    this.selectedCategory = category;
   }
 }

@@ -2,8 +2,10 @@
   <app-customer-header class="header-container"></app-customer-header>
 
   <div class="carousel-container">
-    <div *ngFor="let category of categoriesName" class="carousel-item" (click)="scrollToCategory(category)">
+    <div *ngFor="let category of categoriesName" class="carousel-item" (click)="scrollToCategory(category)"
+      [class.selected]="category === selectedCategory">
       <p>{{ category }}</p>
+      <div class="category-marker" *ngIf="category === selectedCategory"></div>
     </div>
   </div>
 
@@ -18,5 +20,4 @@
       </mat-list-item>
     </mat-list>
   </div>
-  
 </div>
