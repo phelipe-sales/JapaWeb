@@ -22,3 +22,9 @@ export class CreateMenuItem {
         public isAvailable: boolean
     ) { }
 }
+
+export interface MenuItemWithCategory {
+    categoryName: string;
+    menuItems: MenuItemResult[];
+  }
+  

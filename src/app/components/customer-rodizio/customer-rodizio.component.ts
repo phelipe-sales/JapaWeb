@@ -2,10 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CustomerHeaderComponent } from '../customer-header/customer-header.component';
 import { CategoryService } from '../../services/category.service';
-import { MenuItemResult } from '../../models/menuItem';
+import { MenuItemWithCategory } from '../../models/menuItem';
 import { MenuItemService } from '../../services/menu-item.service';
 import { MatListModule } from '@angular/material/list';
-import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'app-customer-rodizio',
@@ -17,7 +16,8 @@ import { forkJoin } from 'rxjs';
 export class CustomerRodizioComponent implements OnInit {
 
   categoriesName: string[] = [];
-  menuItems: MenuItemResult[] = [];
+menuItems: MenuItemWithCategory[] = [];
+  currentlyCategory: string = '';
 
   constructor(private categoryService: CategoryService, private menuItemService: MenuItemService) {
   }
@@ -27,39 +27,19 @@ export class CustomerRodizioComponent implements OnInit {
       .subscribe({
         next: (response) => {
           this.categoriesName = response.data;
-          const observables = this.categoriesName.map(categoryName => this.menuItemService.getByCategory(categoryName));
-
-          forkJoin(observables)
-            .subscribe({
-              next: (responses) => {
-                this.menuItems = responses.map(response => response.data).flat();
-              },
-              error: (error) => {
-                console.log(error);
-              }
-            });
         },
         error: (error) => {
           console.log(error);
         }
       });
-  }
 
-  loadMenuItems(categoryName: string) {
-    this.menuItemService.getByCategory(categoryName)
+      this.menuItemService.getByCategory()
       .subscribe({
         next: (response) => {
           this.menuItems = response.data;
-          console.log(this.menuItems);
-        },
-        error: (error) => {
-          console.log(error);
+          
         }
-      })
-  }
-
-  trackMenuItem(index: number, menuItem: MenuItemResult): string {
-    return menuItem.id;
+      });
   }
 
 }

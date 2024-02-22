@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment.development';
 import { ApiResponse } from '../models/apiResponse';
-import { MenuItemResult } from '../models/menuItem';
+import { MenuItemResult, MenuItemWithCategory } from '../models/menuItem';
 import { SortDirection } from '@angular/material/sort';
 
 @Injectable({
@@ -52,10 +52,8 @@ export class MenuItemService {
     return this.http.put<ApiResponse<MenuItemResult>>(url, menuItem);
   }
 
-  getByCategory(categoryName:string) : Observable<ApiResponse<MenuItemResult[]>>{
+  getByCategory() : Observable<ApiResponse<MenuItemWithCategory[]>>{
     const url = `${this.apiUrl}get-by-category`;
-    const params = new HttpParams()
-      .set('CategoryName', categoryName);
-    return this.http.get<ApiResponse<MenuItemResult[]>>(url, { params });
+    return this.http.get<ApiResponse<MenuItemWithCategory[]>>(url);
   }
 }
