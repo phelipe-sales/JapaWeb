@@ -1,4 +1,4 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
 }
@@ -24,6 +24,19 @@
   scrollbar-color: transparent transparent;
 }
 
+@keyframes scrollAnimation {
+  from {
+    scroll-behavior: smooth;
+  }
+  to {
+    scroll-behavior: initial;
+  }
+}
+
+.scroll-animation {
+  animation: scrollAnimation 0.5s ease;
+}
+
 .carousel-item {
   flex: 0 0 auto;
   margin: 5px 10px 0px 10px;
@@ -34,14 +47,26 @@
   &.selected {
     color: #ff0000;
     font-weight: 600;
+    justify-self: center;
   }
+}
 
-  .category-marker {
-    height: 5px;
-    background-color: #ff0000;
-    width: 100%;
-    position: relative;
-    bottom: 0;
-    border-radius: 15px;
-  } 
+.category-container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+}
+
+.category-title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.menu-item {
+  margin-bottom: 10px;
+}
+
+.list-menuItems{
+  margin-bottom: 30px;
 }

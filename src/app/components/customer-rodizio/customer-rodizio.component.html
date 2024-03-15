@@ -1,23 +1,22 @@
 <div class="container">
   <app-customer-header class="header-container"></app-customer-header>
 
-  <div class="carousel-container">
-    <div *ngFor="let category of categoriesName" class="carousel-item" (click)="scrollToCategory(category)"
-      [class.selected]="category === selectedCategory">
+  <div class="carousel-container" #carouselContainer>
+    <div *ngFor="let category of categories" class="carousel-item" [class.selected]="category === visibleCategory"
+      (click)="scrollToCategory($event, category)">
       <p>{{ category }}</p>
-      <div class="category-marker" *ngIf="category === selectedCategory"></div>
     </div>
   </div>
 
   <div class="list-menuItems">
-    <mat-list *ngFor="let categoryItems of menuItems">
-      <div mat-subheader id="{{ categoryItems.categoryName }}">{{ categoryItems.categoryName }}</div>
-      <mat-list-item *ngFor="let menuItem of categoryItems.menuItems">
-        <div matListItemTitle>{{ menuItem.name }}</div>
-        <div matListItemLine>{{ menuItem.description }}</div>
-        <div matListItemLine>{{ menuItem.price }}</div>
-        <div matListItemLine>{{ menuItem.categoryName }}</div>
-      </mat-list-item>
-    </mat-list>
+    <ng-container *ngFor="let category of categories">
+      <div *ngIf="hasItemsInCategory(category)" class="category-container" id="{{ category }}">
+        <div class="category-title">{{ category }}</div>
+        <div *ngFor="let menuItem of getMenuItemsByCategory(category)" class="menu-item">
+          <p>{{ menuItem.name }}</p>
+          <p>{{ menuItem.price }}</p>
+        </div>
+      </div>
+    </ng-container>
   </div>
 </div>

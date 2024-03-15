@@ -56,4 +56,9 @@ export class MenuItemService {
     const url = `${this.apiUrl}get-by-category`;
     return this.http.get<ApiResponse<MenuItemWithCategory[]>>(url);
   }
+
+  all(): Observable<any> {
+    const url = `${this.apiUrl}all`;
+    return this.http.get<any>(url);
+  }
 }
